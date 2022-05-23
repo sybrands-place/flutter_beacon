@@ -42,10 +42,18 @@ class FlutterPlatform {
   }
 
   void requestAuthorization() {
-    ActivityCompat.requestPermissions(getActivity(), new String[]{
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION
-    }, FlutterBeaconPlugin.REQUEST_CODE_LOCATION);
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+      ActivityCompat.requestPermissions(getActivity(), new String[]{
+              Manifest.permission.ACCESS_COARSE_LOCATION,
+              Manifest.permission.ACCESS_FINE_LOCATION,
+              Manifest.permission.ACCESS_BACKGROUND_LOCATION,
+      }, FlutterBeaconPlugin.REQUEST_CODE_LOCATION);
+    } else {
+      ActivityCompat.requestPermissions(getActivity(), new String[]{
+              Manifest.permission.ACCESS_COARSE_LOCATION,
+              Manifest.permission.ACCESS_FINE_LOCATION,
+      }, FlutterBeaconPlugin.REQUEST_CODE_LOCATION);
+    }
   }
 
   boolean checkLocationServicesPermission() {
